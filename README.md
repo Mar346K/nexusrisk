@@ -1,5 +1,7 @@
 # NexusRisk: Bare-Metal Solana Heuristic Engine 🛡️⚡
 
+[![NexusRisk CI/CD Pipeline](https://github.com/Mar346K/nexusrisk/actions/workflows/ci.yml/badge.svg)](https://github.com/Mar346K/nexusrisk/actions/workflows/ci.yml)
+
 NexusRisk is a high-frequency, bare-metal heuristic engine designed to audit Solana smart contracts and Pump.fun token launches with sub-second latency. By moving LLM inference from the cloud to local, dedicated hardware, it evaluates on-chain metadata, developer reputation, and social sentiment before malicious actors can pull liquidity.
 
 **Performance Benchmark:** Achieved a **70% predictive accuracy rate** in identifying "Rug Pulls" vs. "Safe Entries" over a 14-day live firehose test.
@@ -30,7 +32,7 @@ NexusRisk is not a simple script; it is a multi-threaded SaaS ecosystem built fo
 
 ### Installation
 ```bash
-git clone [https://github.com/YOUR_GITHUB_USERNAME/nexusrisk.git](https://github.com/YOUR_GITHUB_USERNAME/nexusrisk.git)
+git clone [https://github.com/Mar346K/nexusrisk.git](https://github.com/Mar346K/nexusrisk.git)
 cd nexusrisk
 python -m venv .venv
 source .venv/Scripts/activate  # Windows
@@ -38,7 +40,6 @@ pip install -r requirements.txt
 ```
 
 ### Environment Setup
-
 Create a ".env" file in the root directory:
 ```bash
 SOLANA_RPC_URL=wss://[mainnet.helius-rpc.com/?api-key=YOUR_KEY](https://mainnet.helius-rpc.com/?api-key=YOUR_KEY)
@@ -48,9 +49,7 @@ STRIPE_WEBHOOK_SECRET=whsec_...
 ```
 
 ### Launching the Daemon
-
 NexusRisk operates via a unified FastAPI lifespan context manager. Launching the server automatically boots the WebSocket firehose and the Validator loop.
 ```bash
 uvicorn api.server:app --host 0.0.0.0 --port 8000
 ```
-
