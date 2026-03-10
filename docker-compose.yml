@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  nexus-api:
+    build: .
+    container_name: nexusrisk_engine
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      # Bind mount databases so your user data isn't wiped on restart
+      - ./nexus_vault.db:/app/nexus_vault.db
+      - ./trading_data.db:/app/trading_data.db
+      - ./static:/app/static
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

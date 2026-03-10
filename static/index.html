@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusRisk | AI Solana Security</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .glass { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px); }
+        .glow { box-shadow: 0 0 20px rgba(37, 99, 235, 0.2); }
+        .status-pulse { animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; } 
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans selection:bg-blue-500/30 pb-20">
+
+    <nav class="border-b border-slate-800 p-4 glass sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold tracking-tighter">NEXUS<span class="text-blue-500">RISK</span></h1>
+            <div class="flex items-center space-x-6 text-sm font-semibold">
+                <a href="#pricing" class="hover:text-blue-400 transition">Pricing</a>
+                <div id="nav-auth">
+                    <button onclick="toggleModal('login-modal')" class="bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-lg border border-slate-700 transition">
+                        Client Login
+                    </button>
+                </div>
+                <a href="mailto:nexusriskapi@gmail.com" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition shadow-lg shadow-blue-900/20">
+                    Support
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="max-w-6xl mx-auto py-20 px-4 text-center">
+        <div class="inline-flex items-center px-3 py-1 rounded-full bg-emerald-900/30 text-emerald-400 text-xs font-mono mb-6 border border-emerald-800/50">
+            <span class="w-2 h-2 bg-emerald-500 rounded-full mr-2 status-pulse"></span>
+            ARC A770 ENGINE: ONLINE | LAKE WORTH, TX
+        </div>
+        <h2 class="text-6xl font-black mb-6 tracking-tight bg-gradient-to-b from-white to-slate-500 bg-clip-text text-transparent leading-tight">
+            Institutional Solana Security. <br>Processed on Bare Metal.
+        </h2>
+        <p class="text-slate-400 max-w-2xl mx-auto text-lg mb-12">
+            NexusRisk uses local inference to bypass cloud latency. Every vibe check is executed in Weatherford, TX on dedicated hardware.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-20">
+            <div class="bg-slate-900/50 p-8 rounded-3xl border border-slate-800 glow transition hover:border-blue-500/50 text-left">
+                <div class="text-slate-500 text-xs uppercase tracking-widest font-bold mb-2">Logs Scanned</div>
+                <div class="text-4xl font-mono font-bold text-white">1,698,000+</div>
+            </div>
+            <div class="bg-slate-900/50 p-8 rounded-3xl border border-slate-800 glow transition hover:border-blue-500/50 text-left">
+                <div class="text-slate-500 text-xs uppercase tracking-widest font-bold mb-2">Mints Detected</div>
+                <div class="text-4xl font-mono font-bold text-blue-500">653</div>
+            </div>
+            <div class="bg-slate-900/50 p-8 rounded-3xl border border-slate-800 glow transition hover:border-blue-500/50 text-left">
+                <div class="text-slate-500 text-xs uppercase tracking-widest font-bold mb-2">Avg. Latency</div>
+                <div class="text-4xl font-mono font-bold text-emerald-500">1.2s</div>
+            </div>
+        </div>
+
+        <section class="max-w-5xl mx-auto px-4 mb-20 text-left">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-slate-900/40 border border-blue-500/20 p-8 rounded-[2rem] hover:border-blue-500/50 transition backdrop-blur-sm">
+                    <h3 class="text-xl font-black text-white mb-3">Supercharge Your Agents & Bots</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        If you run automated snipers or deploy autonomous <b>OpenClaw</b> trading agents, cloud latency is killing your entry price.
+                    </p>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        NexusRisk provides a direct API endpoint. Hook your OpenClaw agent or Rust bot to our Texas node. The Arc A770 acts as your bot's forensic vision, blocking honeypots and 99-score rugs in under 1.2 seconds before your wallet ever signs the transaction.
+                    </p>
+                </div>
+                <div class="bg-slate-900/40 border border-emerald-500/20 p-8 rounded-[2rem] hover:border-emerald-500/50 transition backdrop-blur-sm">
+                    <h3 class="text-xl font-black text-white mb-3">The Ultimate 'Vibe Check'</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        You don't need to be a programmer to avoid scams. When a contract address drops in a Telegram alpha group, seconds matter.
+                    </p>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Paste the CA into the NexusCloud web portal. Our engine bypasses public RPC congestion to give you an instant forensic breakdown of the developer's history, contract risks, and social sentiment before you click buy on Raydium.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="max-w-5xl mx-auto px-4 mb-20">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-xs font-black tracking-[0.2em] text-slate-500 uppercase">
+                    Live Verified Safe-Entry Feed
+                </h3>
+                <div class="flex items-center gap-2 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
+                    <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
+                    <span class="text-[10px] font-bold text-emerald-500 uppercase tracking-tighter">A770 Real-Time Verification</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left" id="landing-sentry-feed">
+                <div class='p-10 text-center border border-dashed border-slate-800 rounded-2xl text-slate-600 italic col-span-1 md:col-span-2'>Awaiting hardware signal...</div>
+            </div>
+        </section>
+    </header>
+
+    <section id="pricing" class="max-w-5xl mx-auto py-20 px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-black mb-4 tracking-tighter text-white">Choose Your Security Tier</h2>
+            <p class="text-slate-400 max-w-xl mx-auto">Institutional-grade Solana forensics. Both tiers include a secure 3-day trial via Stripe.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            
+            <div class="bg-slate-900 border border-slate-800 rounded-[2.5rem] p-10 relative overflow-hidden group hover:border-slate-700 transition duration-300 shadow-xl flex flex-col">
+                <div class="mb-8">
+                    <h3 class="text-2xl font-black mb-2 text-white">Nexus Trader</h3>
+                    <p class="text-slate-400 text-sm h-10">Perfect for manual traders relying on web-dashboard alerts.</p>
+                </div>
+                <div class="mb-8">
+                    <div class="text-5xl font-black text-white mb-2">$15<span class="text-lg font-normal text-slate-500"> / week</span></div>
+                    <div class="inline-block bg-emerald-500/10 text-emerald-400 text-xs font-bold px-3 py-1 rounded-full border border-emerald-500/20">
+                        3-Day Free Trial
+                    </div>
+                </div>
+                <ul class="space-y-4 text-sm text-slate-300 mb-10 flex-grow">
+                    <li class="flex items-center"><span class="text-blue-500 mr-3 font-bold">✓</span> Full User Dashboard Access</li>
+                    <li class="flex items-center"><span class="text-blue-500 mr-3 font-bold">✓</span> Live Verified Safe-Entry Feed</li>
+                    <li class="flex items-center"><span class="text-blue-500 mr-3 font-bold">✓</span> Unlimited Web UI Vibe Checks</li>
+                </ul>
+                <a href="https://buy.stripe.com/3cI28k4rh75P9dPbawdfG02" target="_blank" class="block w-full text-center bg-slate-800 hover:bg-slate-700 text-white py-4 rounded-xl font-bold transition duration-300 border border-slate-700 hover:border-slate-500 mt-auto shadow-lg">
+                    Start Web Trial
+                </a>
+            </div>
+
+            <div class="bg-gradient-to-br from-blue-600 to-blue-900 rounded-[2.5rem] p-10 relative overflow-hidden group shadow-2xl shadow-blue-900/30 transform md:-translate-y-4 flex flex-col border border-blue-500/30">
+                <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-white/10 rounded-full blur-3xl group-hover:bg-white/20 transition duration-700"></div>
+                <div class="absolute top-0 right-0 mt-6 mr-6">
+                    <span class="bg-blue-400/30 text-blue-100 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full backdrop-blur-sm border border-blue-400/30">Most Popular</span>
+                </div>
+                <div class="relative z-10 mb-8">
+                    <h3 class="text-2xl font-black mb-2 text-white">Nexus API Pro</h3>
+                    <p class="text-blue-200 text-sm h-10">For bot-runners and algorithmic traders (BonkBot/Trojan).</p>
+                </div>
+                <div class="relative z-10 mb-8">
+                    <div class="text-5xl font-black text-white mb-2">$50<span class="text-lg font-normal text-blue-300"> / month</span></div>
+                    <div class="inline-block bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full border border-white/30 backdrop-blur-sm">
+                        3-Day Free Trial
+                    </div>
+                </div>
+                <ul class="relative z-10 space-y-4 text-sm text-blue-100 mb-10 flex-grow">
+                    <li class="flex items-center"><span class="bg-blue-400/40 rounded-full p-1 mr-3 text-[10px]">✓</span> Direct API Key Access</li>
+                    <li class="flex items-center"><span class="bg-blue-400/40 rounded-full p-1 mr-3 text-[10px]">✓</span> Sub-Second Inference Routing</li>
+                    <li class="flex items-center"><span class="bg-blue-400/40 rounded-full p-1 mr-3 text-[10px]">✓</span> OpenClaw Agent Ready</li>
+                </ul>
+                <a href="https://buy.stripe.com/7sYeV6g9ZfCl9dPa6sdfG01" target="_blank" class="relative z-10 block w-full text-center bg-white text-blue-700 py-4 rounded-xl font-black hover:scale-105 transition transform active:scale-95 shadow-xl mt-auto">
+                    Get API Key
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="max-w-6xl mx-auto py-24 px-4 border-t border-slate-900 text-center text-slate-500 relative">
+        <div class="text-slate-400 font-bold mb-4 tracking-tighter">NEXUSRISK</div>
+        <p class="text-sm mb-4">Operating near Lake Worth, TX. Bare-metal hardware prevents cloud-leak vulnerabilities.</p>
+        
+        <p class="text-[10px] mb-8">
+            Technical Support: <a href="mailto:nexusriskapi@gmail.com" class="text-blue-500 hover:text-blue-400 transition">nexusriskapi@gmail.com</a><br>
+            Active Tunnel: <span class="font-mono text-slate-400">https://fun-enables-thing-luck.trycloudflare.com</span>
+        </p>
+
+        <div class="flex justify-center space-x-8 text-[10px] font-bold uppercase tracking-widest mb-12">
+            <button onclick="toggleModal('privacy-modal')" class="hover:text-blue-500 transition">Privacy Policy</button>
+            <button onclick="toggleModal('terms-modal')" class="hover:text-blue-500 transition">Terms of Service</button>
+            <button onclick="toggleModal('disclaimer-modal')" class="hover:text-amber-500 transition text-slate-400">Legal Disclaimer</button>
+        </div>
+
+        <div class="fixed bottom-0 left-0 w-full p-3 border-t border-slate-900/50 bg-slate-950/95 backdrop-blur z-[40] text-[9px] text-slate-600 leading-relaxed text-center hidden md:block">
+            <strong class="uppercase text-slate-500">Not Financial Advice:</strong> NexusRisk provides algorithmic data for educational purposes only. Cryptocurrency trading involves significant risk of loss. By using this site, you agree to our Terms of Service and hold NexusRisk harmless from any financial losses.
+        </div>
+    </footer>
+
+    <div id="login-modal" class="hidden fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
+        <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl max-w-md w-full shadow-2xl">
+            <h3 class="text-2xl font-bold mb-2">Access Portal</h3>
+            <p class="text-slate-400 text-sm mb-6">Enter your API key to view live coins and usage stats.</p>
+            <input type="text" id="api-key-input" placeholder="nxr_..." class="w-full bg-slate-950 border border-slate-700 p-3 rounded-xl mb-4 focus:border-blue-500 outline-none transition font-mono">
+            <div class="flex space-x-3">
+                <button onclick="handleLogin()" class="flex-1 bg-blue-600 hover:bg-blue-700 py-3 rounded-xl font-bold transition">Verify & Enter</button>
+                <button onclick="toggleModal('login-modal')" class="px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 transition text-sm">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="cert-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md px-4">
+        <div class="bg-slate-900 border-2 border-blue-500/30 p-8 rounded-[2rem] max-w-sm w-full shadow-[0_0_50px_rgba(37,99,235,0.2)] text-center relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent"></div>
+            <h3 class="text-xs font-black tracking-[0.3em] text-blue-500 uppercase mb-6">Security Certificate</h3>
+            <div class="mb-6">
+                <p class="text-[10px] text-slate-500 uppercase font-bold mb-1">Verified Mint</p>
+                <p id="cert-mint" class="text-xs font-mono text-white break-all bg-black/40 p-2 rounded-lg border border-slate-800"></p>
+            </div>
+            <div class="grid grid-cols-2 gap-4 mb-8">
+                <div class="text-left">
+                    <p class="text-[8px] text-slate-500 uppercase font-bold">Safety Score</p>
+                    <p id="cert-score" class="text-xl font-black text-emerald-400"></p>
+                </div>
+                <div class="text-right">
+                    <p class="text-[8px] text-slate-500 uppercase font-bold">Hardware</p>
+                    <p class="text-[10px] font-bold text-slate-400 font-mono">INTEL_A770</p>
+                </div>
+            </div>
+            <p class="text-[9px] text-slate-600 italic leading-relaxed mb-8">Verified via local inference on Intel Arc A770 hardware.<br>Processed in Weatherford, TX.</p>
+            <button onclick="toggleModal('cert-modal')" class="w-full py-3 bg-slate-800 rounded-xl text-xs font-bold uppercase tracking-widest hover:text-white transition">Close Record</button>
+        </div>
+    </div>
+
+    <div id="disclaimer-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm px-4">
+        <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl max-w-lg w-full shadow-2xl max-h-[80vh] overflow-y-auto custom-scrollbar">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-4 mb-4">
+                <h3 class="text-amber-500 font-black text-sm uppercase tracking-widest">Full Legal Disclaimer</h3>
+                <button onclick="toggleModal('disclaimer-modal')" class="text-slate-500 hover:text-white text-xl font-bold">✕</button>
+            </div>
+            <div class="text-xs text-slate-400 space-y-4 leading-relaxed text-justify">
+                <p><strong>1. Informational Purposes Only:</strong> NexusRisk is a data analytics tool. The "Risk Scores" and "AI Vibe Checks" are mathematical outputs based on historical blockchain data. They are not predictions of future market performance.</p>
+                <p><strong>2. High-Risk Environment:</strong> Trading decentralized assets involves significant risk. Smart contracts can be modified, liquidity can be removed, and social sentiment can be manipulated. NexusRisk's algorithms may not detect all malicious activity.</p>
+                <p><strong>3. No Fiduciary Duty:</strong> The creators, operators, and hosting providers of NexusRisk are not financial advisors, brokers, or fiduciaries. No client relationship is established by purchasing a subscription or API key.</p>
+                <p><strong>4. System Reliability:</strong> While NexusRisk operates on dedicated bare-metal hardware, system downtime, API rate limits, or network latency may occur. NexusRisk is not liable for missed trading opportunities resulting from technical interruptions.</p>
+            </div>
+            <button onclick="toggleModal('disclaimer-modal')" class="w-full mt-6 py-3 bg-slate-800 hover:bg-slate-700 rounded-xl text-xs font-bold text-white uppercase transition">I Understand and Agree</button>
+        </div>
+    </div>
+
+    <div id="privacy-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm px-4">
+        <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl max-w-lg w-full shadow-2xl text-center">
+            <h3 class="text-blue-500 font-black text-sm uppercase tracking-widest mb-4">Privacy Policy</h3>
+            <p class="text-xs text-slate-400 mb-6">We only store the email addresses provided by Stripe to manage API keys and usage quotas. We do not sell or expose user data to third parties.</p>
+            <button onclick="toggleModal('privacy-modal')" class="w-full py-3 bg-slate-800 rounded-xl text-xs font-bold uppercase transition hover:text-white">Close</button>
+        </div>
+    </div>
+
+    <div id="terms-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm px-4">
+        <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl max-w-lg w-full shadow-2xl text-center">
+            <h3 class="text-blue-500 font-black text-sm uppercase tracking-widest mb-4">Terms of Service</h3>
+            <p class="text-xs text-slate-400 mb-6">By using NexusRisk, you agree to not abuse the API rate limits. Subscriptions are billed automatically. Cancel anytime via the Stripe billing portal. Attempting to reverse-engineer or DDoS the Texas node will result in immediate IP banning without refund.</p>
+            <button onclick="toggleModal('terms-modal')" class="w-full py-3 bg-slate-800 rounded-xl text-xs font-bold uppercase transition hover:text-white">Close</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleModal(id) {
+            document.getElementById(id).classList.toggle('hidden');
+        }
+
+        function showCert(mint, score) {
+            document.getElementById('cert-mint').innerText = mint;
+            document.getElementById('cert-score').innerText = score + "/100";
+            document.getElementById('cert-modal').classList.remove('hidden');
+        }
+
+        function handleLogin() {
+            const key = document.getElementById('api-key-input').value.trim();
+            if (!key) return alert('Please enter your API key');
+            
+            localStorage.setItem('nxr_api_key', key);
+            
+            if (key === 'nxr_admin_marquis_2026') {
+                window.location.href = `/portal/admin?key=${key}`;
+            } else {
+                window.location.href = `/portal/user?key=${key}`;
+            }
+        }
+
+        // Session Resume
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedKey = localStorage.getItem('nxr_api_key');
+            if (savedKey) {
+                const navAuth = document.getElementById('nav-auth');
+                navAuth.innerHTML = `
+                    <button onclick="handleLogin()" class="text-blue-400 hover:text-blue-300 font-mono text-xs uppercase tracking-tighter">
+                        RESUME SESSION [${savedKey.substring(0,8)}...]
+                    </button>
+                    <button onclick="localStorage.clear(); location.reload();" class="text-slate-600 hover:text-red-400 ml-2 text-xs">Logout</button>
+                `;
+            }
+        });
+
+        // LIVE LANDING PAGE WEBSOCKET 
+        // This makes the landing page feed pulse with real coins as they are audited
+        document.addEventListener("DOMContentLoaded", function() {
+            const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+            const wsUrl = protocol + window.location.host + '/ws/feed';
+            const ws = new WebSocket(wsUrl);
+            
+            ws.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                const feedContainer = document.getElementById('landing-sentry-feed');
+                
+                if (feedContainer.innerHTML.includes('Awaiting hardware signal')) {
+                    feedContainer.innerHTML = '';
+                }
+
+                const scoreColor = data.risk_score > 60 ? 'text-rose-500' : (data.risk_score > 30 ? 'text-amber-400' : 'text-emerald-400');
+                const statusText = data.risk_score > 60 ? 'HIGH RISK' : 'VERIFIED';
+                
+                const newCard = `
+                <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-2xl flex items-center justify-between backdrop-blur-sm group hover:border-blue-500/50 transition cursor-pointer animate-pulse" onclick="showCert('${data.mint}', '${data.risk_score}')">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-blue-600/20 rounded-full flex items-center justify-center border border-blue-500/30 text-blue-400 font-black text-xs">
+                            ${data.symbol.substring(0,1)}
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-white group-hover:text-blue-400 transition">${data.symbol}</p>
+                            <p class="text-[9px] font-mono text-slate-500">${data.mint.substring(0,14)}...</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-[9px] font-black bg-slate-800 ${scoreColor} px-2 py-0.5 rounded border border-slate-700 uppercase">
+                            ${statusText}
+                        </span>
+                        <p class="text-[10px] text-slate-500 mt-1 font-mono">Score: ${data.risk_score}</p>
+                    </div>
+                </div>`;
+                
+                feedContainer.insertAdjacentHTML('afterbegin', newCard);
+                
+                // RIGID FEED LIMITER: Continuously remove children until exactly 4 remain
+                while (feedContainer.childElementCount > 4) {
+                    feedContainer.removeChild(feedContainer.lastElementChild);
+                }
+                
+                setTimeout(() => {
+                    if(feedContainer.firstElementChild) feedContainer.firstElementChild.classList.remove('animate-pulse');
+                }, 1000);
+            };
+        });
+    </script>
+</body>
+</html>

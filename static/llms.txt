@@ -1,0 +1,28 @@
+# NexusRisk Bare-Metal API Documentation
+
+NexusRisk is a high-speed, bare-metal heuristic engine for Solana and Pump.fun token analysis. It evaluates on-chain metadata in sub-second latency to prevent trading bots from buying honeypots, rugs, and bundled launches.
+
+## Base URL
+https://taking-playing-between-traveler.trycloudflare.com
+
+## Authentication
+All requests require an API key passed in the headers.
+Header Key: `X-API-Key`
+Header Value: `<your_api_key>`
+
+## Endpoints
+
+### 1. Token Risk Audit
+- **Method:** `GET`
+- **Path:** `/api/v1/token/{mint_address}`
+- **Description:** Returns a real-time risk assessment for a given Solana token mint address.
+- **Latency:** < 1.2 seconds.
+
+#### Example Request (Python)
+```python
+import requests
+
+url = "[https://taking-playing-between-traveler.trycloudflare.com/api/v1/token/2DGLdvpK](https://taking-playing-between-traveler.trycloudflare.com/api/v1/token/2DGLdvpK)..."
+headers = {"X-API-Key": "your_api_key"}
+response = requests.get(url, headers=headers)
+print(response.json())

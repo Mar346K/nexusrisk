@@ -1,0 +1,28 @@
+# Environments & Secrets
+.env
+.venv/
+env/
+venv/
+ENV/
+
+# Databases (CRITICAL SECURITY)
+*.db
+*.sqlite
+*.sqlite3
+*.db-shm
+*.db-wal
+nexus_vault.db
+trading_data.db
+
+# Python Core
+__pycache__/
+*.pyc
+
+# Application Data
+output/
+data/permanent/
+
+# Ignore Large Binaries & Context Dumps
+cloudflared.exe
+llm_context_dump.md
+output/
