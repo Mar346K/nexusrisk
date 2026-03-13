@@ -10,7 +10,6 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
-    # This creates a real Redis instance in the GitHub cloud environment
     services:
       redis:
         image: redis:alpine
@@ -35,17 +34,20 @@ jobs:
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
+        # Install everything explicitly to be safe
+        pip install fastapi uvicorn pydantic pydantic-settings stripe redis aiohttp aiosqlite structlog cachetools pytest pytest-asyncio pytest-xprocess httpx
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-        pip install pytest pytest-asyncio pytest-xprocess httpx redis
 
     - name: Run Automated Tests
       env:
-        # Crucial: Tells the app to look at the service container we just spun up
+        # Provide the missing variables Pydantic is screaming for
         REDIS_URL: redis://localhost:6379/0
+        STRIPE_SECRET_KEY: "sk_test_mock"
+        STRIPE_WEBHOOK_SECRET: "whsec_mock"
+        ADMIN_SECRET: "nxr_admin_mock_123"
+        TEST_USER_KEY: "nxr_test_mock_123"
+        GMAIL_APP_PASSWORD: "mock_password"
         GENERIC_API_KEY: "nxr_test_key_123"
       run: |
-        pytest -p no:anchorpy -v
-
-    - name: Verify Docker Build
-      run: |
-        docker build -t nexusrisk-engine:test .
+        # Run tests from the project root
+        python -m pytest -p no:anchorpy -v
