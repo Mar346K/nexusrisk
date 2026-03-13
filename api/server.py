@@ -5,6 +5,9 @@ import stripe
 import secrets
 import sqlite3
 import uuid
+import structlog
+logger = structlog.get_logger()
+
 from datetime import datetime
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Depends, HTTPException, Security, Request, WebSocket, WebSocketDisconnect
