@@ -170,10 +170,9 @@ db = TradingDatabase()
 # --- ENTERPRISE SECURITY MIDDLEWARE ---
 @app.middleware("http")
 async def security_shield_middleware(request: Request, call_next):
-    # We don't want to block webhooks or WebSockets
     if not request.url.path.startswith("/webhook") and not request.url.path.startswith("/ws"):
         try:
-            shield.check_global_traffic(request)
+            await shield.check_global_traffic(request) # <--- Added 'await'
         except HTTPException as exc:
             return JSONResponse(status_code=exc.status_code, content={"detail": exc.detail})
             
@@ -250,6 +249,10 @@ async def serve_landing_page():
 
 @app.get("/api/v1/token/{mint_address}")
 async def analyze_token(mint_address: str, api_key: str = Depends(get_api_key)):
+    # 0. Distributed Tier Check
+    is_pro = "pro" in (db.get_user_stats(api_key) or {}).get("plan_type", "").lower()
+    await shield.check_rate_limit(api_key, is_pro=is_pro)
+
     # 1. Track the "API Heatmap" (How many other bots are looking at this?)
     db.log_api_query(mint_address, api_key)
     query_heat = db.get_query_count_last_60s(mint_address)
@@ -466,7 +469,7 @@ async def admin_portal(key: str):
 
 @app.get("/portal/user", response_class=HTMLResponse, include_in_schema=False)
 async def user_simulation_portal(key: str):
-    if key not in [TEST_USER_KEY, "nxr_test_pro", "nxr_test_trader"] and not is_key_valid(key):
+    if key not in [TEST_USER_KEY, "nxr_test_pro", "nxr_test_trader"] and not await is_key_valid_async(key):
         raise HTTPException(status_code=401)
 
     usage = db.get_user_stats(key) or {"request_count": 0, "email": "Simulated User", "plan_type": "beta_web_15"}
