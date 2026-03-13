@@ -12,6 +12,7 @@ from pydantic import BaseModel
 from fastapi.responses import JSONResponse, HTMLResponse, FileResponse
 from dotenv import load_dotenv
 from workers.validator import GroundTruthValidator
+from core.config import settings
 
 # --- INTERNAL NEXUS MODULES ---
 from core.security import shield
@@ -28,10 +29,10 @@ load_dotenv()
 current_load = 0
 
 # --- CONFIGURATION ---
-stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
-STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET")
-ADMIN_SECRET = os.getenv("ADMIN_SECRET", "nxr_admin_marquis_2026")
-TEST_USER_KEY = "nxr_test_user_001"
+stripe.api_key = settings.stripe_secret_key
+STRIPE_WEBHOOK_SECRET = settings.stripe_webhook_secret
+ADMIN_SECRET = settings.admin_secret
+TEST_USER_KEY = settings.test_user_key
 
 # --- WEBSOCKET MANAGER ---
 class ConnectionManager:
