@@ -4,6 +4,7 @@ import os
 import stripe
 import secrets
 import sqlite3
+import uuid
 from datetime import datetime
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Depends, HTTPException, Security, Request, WebSocket, WebSocketDisconnect
@@ -126,6 +127,26 @@ async def lifespan(app: FastAPI):
     validator_task.cancel()
 
 app = FastAPI(title="NexusRisk API", version="1.2.0", lifespan=lifespan)
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    error_id = str(uuid.uuid4())
+    
+    # Log the REAL error internally with the UUID
+    logger.error(
+        "unhandled_exception",
+        error_id=error_id,
+        path=request.url.path,
+        error=str(exc)
+    )
+    
+    # Return a generic, "opaque" message to the outside world
+    return JSONResponse(
+        status_code=500,
+        content={
+            "detail": "Internal system error.",
+            "error_id": error_id
+        }
+    )
 
 # --- STRICT API BOUNDARY DEFENSE (CORS) ---
 app.add_middleware(
