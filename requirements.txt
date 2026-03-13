@@ -22,3 +22,7 @@ matplotlib
 # Testing
 pytest
 httpx
+
+# New Additions
+aiosqlite
+pytest-asyncio
