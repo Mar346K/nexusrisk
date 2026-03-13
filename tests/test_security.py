@@ -7,6 +7,7 @@ class MockRequest:
     """Mocks a FastAPI Request object to inject simulated Cloudflare IPs"""
     def __init__(self, ip):
         self.headers = {"CF-Connecting-IP": ip}
+        self.client = None
 
 def test_ip_blacklisting():
     shield = SecurityShield()
@@ -37,3 +38,14 @@ def test_tier_rate_limiting():
 
     assert excinfo.value.status_code == 429
     assert "Max 30 requests" in excinfo.value.detail
+
+def test_memory_management_bounds():
+    shield = SecurityShield()
+    
+    # The cache is capped at 10,000 items. Let's push 10,005 unique IPs.
+    for i in range(10005):
+        req = MockRequest(f"10.0.0.{i}")
+        shield.check_global_traffic(req)
+        
+    # The length of the cache MUST not exceed 10000, proving we are immune to OOM memory leaks.
+    assert len(shield.ip_hits) <= 10000

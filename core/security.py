@@ -1,15 +1,17 @@
 import time
 from fastapi import HTTPException, Request
-from collections import defaultdict
+from cachetools import TTLCache
 
 class SecurityShield:
     def __init__(self):
         # LAYER 2: API Key Sliding Window (Business Logic)
-        self.key_history = defaultdict(list)
+        # Cap at 10,000 active keys, auto-evict memory after 60 seconds of inactivity
+        self.key_history = TTLCache(maxsize=10000, ttl=60)
         self.window = 60  # 1 minute window
 
         # LAYER 1: IP Blacklist & Spam Tracking (DDoS Protection)
-        self.ip_hits = {}
+        # Cap at 10,000 active IPs, auto-evict memory after 10 minutes
+        self.ip_hits = TTLCache(maxsize=10000, ttl=600)
         self.MAX_IP_HITS_PER_MIN = 120  # Max traffic before auto-ban
         self.BAN_TIME = 600  # 10 minutes in the shadow realm
 
@@ -62,6 +64,10 @@ class SecurityShield:
         # Pros get 600 req/min (10/sec). Web Traders get 30 req/min (1 request every 2s).
         rate_limit = 600 if is_pro else 30
         
+        # Initialize the list for this key if it doesn't exist in the cache yet
+        if api_key not in self.key_history:
+            self.key_history[api_key] = []
+
         # Keep only requests from the last 60 seconds
         self.key_history[api_key] = [
             t for t in self.key_history[api_key] if now - t < self.window
