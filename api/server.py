@@ -13,6 +13,7 @@ from fastapi.responses import JSONResponse, HTMLResponse, FileResponse
 from dotenv import load_dotenv
 from workers.validator import GroundTruthValidator
 from core.config import settings
+from fastapi.middleware.cors import CORSMiddleware
 
 # --- INTERNAL NEXUS MODULES ---
 from core.security import shield
@@ -125,6 +126,21 @@ async def lifespan(app: FastAPI):
     validator_task.cancel()
 
 app = FastAPI(title="NexusRisk API", version="1.2.0", lifespan=lifespan)
+
+# --- STRICT API BOUNDARY DEFENSE (CORS) ---
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:8000",
+        "http://127.0.0.1:8000",
+        "https://nexusrisk.ai",
+        # Note: You can add your Cloudflare tunnel URL here later if needed
+    ],
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["X-API-Key", "Content-Type", "Accept"],
+)
+
 checker = RugChecker()
 sifter = LocalSifter()
 router = ModelRouter()
