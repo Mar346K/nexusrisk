@@ -1,6 +1,10 @@
 import time
 from fastapi import HTTPException, Request
 from cachetools import TTLCache
+import structlog
+
+# Initialize the structured logger
+logger = structlog.get_logger()
 
 class SecurityShield:
     def __init__(self):
@@ -54,7 +58,13 @@ class SecurityShield:
         # Trigger new ban if they spam
         if record['hits'] > self.MAX_IP_HITS_PER_MIN:
             record['banned_until'] = now + self.BAN_TIME
-            print(f"🚨 [SHIELD] Auto-Banned IP: {ip} for 10 minutes.")
+            # Structured JSON Security Audit Log
+            logger.warning(
+                "ip_auto_banned", 
+                ip_address=ip, 
+                duration_sec=self.BAN_TIME, 
+                reason="rate_limit_exceeded"
+            )
             raise HTTPException(status_code=429, detail="Global rate limit exceeded. Try again in 10 minutes.")
 
     def check_rate_limit(self, api_key: str, is_pro: bool = False):
