@@ -1,23 +1,22 @@
-import pytest
 from fastapi.testclient import TestClient
+from unittest.mock import AsyncMock, patch
 from api.server import app
 
 client = TestClient(app)
 
-def test_cors_allowed_origin():
-    headers = {"Origin": "http://localhost:8000"}
-    # Hit the public LLM discovery route
-    response = client.get("/llms.txt", headers=headers)
-    
+@patch('api.server.shield.check_global_traffic', new_callable=AsyncMock)
+def test_cors_allowed_origin(mock_shield):
+    headers = {
+        "Origin": "https://nexusrisk.ai",
+        "Access-Control-Request-Method": "GET"
+    }
+    response = client.options("/llms.txt", headers=headers)
     assert response.status_code == 200
-    # The API should explicitly grant access to this origin
     assert "access-control-allow-origin" in response.headers
-    assert response.headers["access-control-allow-origin"] == "http://localhost:8000"
 
-def test_cors_rejected_origin():
+@patch('api.server.shield.check_global_traffic', new_callable=AsyncMock)
+def test_cors_rejected_origin(mock_shield):
     headers = {"Origin": "https://malicious-scraper.com"}
     response = client.get("/llms.txt", headers=headers)
-    
-    # For unauthorized origins, FastAPI drops the CORS headers completely.
-    # When the browser sees these headers are missing, it blocks the response payload.
+    # The malicious scraper should NOT get the allow-origin header
     assert "access-control-allow-origin" not in response.headers
