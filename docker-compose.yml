@@ -10,9 +10,15 @@ services:
     env_file:
       - .env
     volumes:
-      # Bind mount databases so your user data isn't wiped on restart
       - ./nexus_vault.db:/app/nexus_vault.db
       - ./trading_data.db:/app/trading_data.db
       - ./static:/app/static
     extra_hosts:
       - "host.docker.internal:host-gateway"
+
+  redis:
+    image: redis:alpine
+    container_name: nexus_state_store
+    restart: unless-stopped
+    ports:
+      - "6379:6379"

@@ -6,6 +6,7 @@ class Settings(BaseSettings):
     stripe_webhook_secret: str
     admin_secret: str
     gmail_app_password: str
+    redis_url: str = "redis://localhost:6379/0"
     
     # Optional / Configurable
     ollama_model: str = "llama3.1:latest"
