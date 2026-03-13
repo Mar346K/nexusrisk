@@ -285,7 +285,9 @@
         // This makes the landing page feed pulse with real coins as they are audited
         document.addEventListener("DOMContentLoaded", function() {
             const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
-            const wsUrl = protocol + window.location.host + '/ws/feed';
+            // Use the saved key, or default to the marketing demo key
+            const activeKey = localStorage.getItem('nxr_api_key') || 'nxr_test_trader';
+            const wsUrl = protocol + window.location.host + '/ws/feed?api_key=' + activeKey;
             const ws = new WebSocket(wsUrl);
             
             ws.onmessage = function(event) {

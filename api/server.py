@@ -606,7 +606,7 @@ def check_token(mint):
             // LIVE SENTRY FEED: True WebSocket Connection
             document.addEventListener("DOMContentLoaded", function() {{
                 const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
-                const wsUrl = protocol + window.location.host + '/ws/feed';
+                const wsUrl = protocol + window.location.host + '/ws/feed?api_key={key}';
                 const ws = new WebSocket(wsUrl);
                 
                 ws.onmessage = function(event) {{
