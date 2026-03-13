@@ -40,7 +40,6 @@ jobs:
 
     - name: Run Automated Tests
       env:
-        # Provide the missing variables Pydantic is screaming for
         REDIS_URL: redis://localhost:6379/0
         STRIPE_SECRET_KEY: "sk_test_mock"
         STRIPE_WEBHOOK_SECRET: "whsec_mock"
@@ -48,6 +47,8 @@ jobs:
         TEST_USER_KEY: "nxr_test_mock_123"
         GMAIL_APP_PASSWORD: "mock_password"
         GENERIC_API_KEY: "nxr_test_key_123"
+        # The missing variables to keep LocalSifter happy:
+        SOLANA_RPC_URL: "wss://mainnet.helius-rpc.com/?api-key=mock_helius_key"
+        OLLAMA_MODEL: "llama3.1:latest"
       run: |
-        # Run tests from the project root
         python -m pytest -p no:anchorpy -v
