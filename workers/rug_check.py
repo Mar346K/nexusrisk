@@ -1,5 +1,5 @@
 import os
-import requests
+import aiohttp
 import asyncio
 from dotenv import load_dotenv
 
@@ -24,30 +24,26 @@ class RugChecker:
         url = f"{self.base_url}/tokens/{mint_address}/report"
         
         try:
-            # 2. Try the REAL RugCheck API first
-            loop = asyncio.get_event_loop()
-            response = await loop.run_in_executor(
-                None, 
-                lambda: requests.get(url, headers=self.headers, timeout=2.5)
-            )
-            
-            if response.status_code == 200:
-                data = response.json()
-                raw_score = data.get('score', 0)
-                normalized_score = min(int((raw_score / 10000) * 100), 100) if raw_score > 0 else 0
-                if normalized_score == 0 and raw_score > 0:
-                    normalized_score = 5
-                return {"status": "SAFE" if normalized_score < 50 else "DANGER", "score": normalized_score}
-                
-            elif response.status_code in [400, 404]:
-                print(f"⚡ [A770 Override] {mint_address[:8]} is too new for cloud APIs. Routing to Local Heuristics.")
-                return self._local_heuristic_scan(token_data)
-                
-            else:
-                print(f"⚠️ [RugCheck API] Status {response.status_code} for {mint_address[:8]}")
-                return self._local_heuristic_scan(token_data)
+            # 2. Try the REAL RugCheck API first using native async HTTP
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url, headers=self.headers, timeout=2.5) as response:
+                    if response.status == 200:
+                        data = await response.json()
+                        raw_score = data.get('score', 0)
+                        normalized_score = min(int((raw_score / 10000) * 100), 100) if raw_score > 0 else 0
+                        if normalized_score == 0 and raw_score > 0:
+                            normalized_score = 5
+                        return {"status": "SAFE" if normalized_score < 50 else "DANGER", "score": normalized_score}
+                    
+                    elif response.status in [400, 404]:
+                        print(f"⚡ [A770 Override] {mint_address[:8]} is too new for cloud APIs. Routing to Local Heuristics.")
+                        return self._local_heuristic_scan(token_data)
+                    
+                    else:
+                        print(f"⚠️ [RugCheck API] Status {response.status} for {mint_address[:8]}")
+                        return self._local_heuristic_scan(token_data)
 
-        except Exception as e:
+        except (aiohttp.ClientError, asyncio.TimeoutError) as e:
             print(f"⚠️ [API Timeout] Falling back to A770 Heuristics for {mint_address[:8]}")
             return self._local_heuristic_scan(token_data)
 

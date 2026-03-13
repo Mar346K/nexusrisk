@@ -28,3 +28,11 @@ def test_local_heuristic_scan_danger():
     
     assert result["score"] == 99      # Should cap at 99
     assert result["status"] == "DANGER"
+
+@pytest.mark.asyncio
+async def test_quick_audit_empty_mint():
+    checker = RugChecker()
+    # An empty or mock mint should immediately return SAFE (score 0)
+    result = await checker.quick_audit({"mint": ""})
+    assert result["score"] == 0
+    assert result["status"] == "SAFE"
