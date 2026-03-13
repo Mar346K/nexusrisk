@@ -16,7 +16,7 @@ from workers.validator import GroundTruthValidator
 # --- INTERNAL NEXUS MODULES ---
 from core.security import shield
 from core.database import TradingDatabase
-from core.billing import generate_api_key, is_key_valid
+from core.billing import generate_api_key_async, is_key_valid_async
 from core.cache_manager import global_cache
 from scrapers.chain_listener import monitor_new_tokens
 from workers.rug_check import RugChecker
@@ -66,11 +66,11 @@ class RiskReport(BaseModel):
 API_KEY_NAME = "X-API-Key"
 api_key_header = APIKeyHeader(name=API_KEY_NAME, auto_error=True)
 
-def get_api_key(api_key: str = Security(api_key_header)):
+async def get_api_key(api_key: str = Security(api_key_header)):
     if api_key in [ADMIN_SECRET, TEST_USER_KEY, "nxr_test_pro", "nxr_test_trader"]:
         return api_key
-        
-    if not is_key_valid(api_key):
+
+    if not await is_key_valid_async(api_key):
         raise HTTPException(status_code=403, detail="Invalid API Key.")
         
     # Check if they failed their Stripe payment
@@ -145,7 +145,14 @@ async def security_shield_middleware(request: Request, call_next):
 
 # --- WEBSOCKET ROUTE ---
 @app.websocket("/ws/feed")
-async def websocket_endpoint(websocket: WebSocket):
+async def websocket_endpoint(websocket: WebSocket, api_key: str = None):
+    # The Bouncer: Check system keys first, then hit the DB for live keys
+    is_system_key = api_key in [ADMIN_SECRET, TEST_USER_KEY, "nxr_test_pro", "nxr_test_trader"]
+    
+    if not api_key or (not is_system_key and not await is_key_valid_async(api_key)):
+        await websocket.close(code=1008) # 1008 = Policy Violation
+        return
+
     await ws_manager.connect(websocket)
     try:
         while True:
@@ -331,8 +338,8 @@ async def stripe_webhook(request: Request):
         
         # Traffic Cop Routing
         plan_name = "pro_api_50" if amount_paid >= 5000 else "beta_web_15"
-            
-        new_key = generate_api_key(email, customer_id or "guest")
+
+        new_key = await generate_api_key_async(email, customer_id or "guest")
         
         # Pass the new Stripe tracking IDs to the database
         db.add_new_user(new_key, email, plan=plan_name, customer_id=customer_id, sub_id=sub_id)
